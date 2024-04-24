@@ -18,7 +18,7 @@ int existe(int numeros[], int tamanho, int valor){
     return 1;
 }
 
-int checagemNumeros(int numer)
+
 
 void menu(){
     setlocale(LC_ALL, "Portuguese");
@@ -35,6 +35,7 @@ int main(){
     int numerosSorteados[MAX];
     int quantNumerosIguais = 0;
     int v;
+    int valorChecar;
     char continuar;
 
     menu();
@@ -42,6 +43,7 @@ int main(){
     setlocale(LC_ALL, "Portuguese");
     do
     {
+        quantNumerosIguais = 0;
         for(int i = 0; i < MAX; i++)
         {
             printf("\nDigite o %d° numero: ", i+1);
@@ -51,24 +53,29 @@ int main(){
         srand(time(NULL));
         for(int i = 0; i < MAX; i++)
         {
-            v = rand() % 60;
+            v = rand() % 61;
             while(existe(numerosSorteados, i, v) == 0){
-                v = rand() % 60;
+                v = rand() % 61;
             }
             numerosSorteados[i] = v;
         }
 
         for(int i = 0; i < MAX; i++)
         {
-            if(numerosUsuarios[i] == numerosSorteados[i])
+            valorChecar = numerosUsuarios[i];
+            for(int j = 0; j < MAX; j++)
             {
-                quantNumerosIguais += 1;
+                if(numerosSorteados[j] == valorChecar)
+                {
+                    quantNumerosIguais++;
+                    break;
+                }
             }
         }
 
         printf("\n================================================================");
         printf("\nNumeros Sorteados");
-        printf("\n================================================================");
+        printf("\n================================================================\n");
 
         for(int i = 0; i < MAX; i++)
         {
@@ -77,20 +84,47 @@ int main(){
 
         printf("\n================================================================");
         printf("\nNumeros Usuario");
-        printf("\n================================================================");
+        printf("\n================================================================\n");
 
         for(int i = 0; i < MAX; i++)
         {
             printf("\t%d", numerosUsuarios[i]);
         }
 
+        printf("\n================================================================");
 
+        if(quantNumerosIguais == 4)
+        {   
+            printf("\n================================================================");
+            printf("\nVocê acertou 4 numeros!");
+            
+        }
+        else if(quantNumerosIguais == 5)
+        {
+            printf("\n================================================================");
+            printf("\nVocê acertou 5 numeros!");
+            printf("\nOs numeros foram: ");
+        }
+        else if(quantNumerosIguais == 6)
+        {
+            printf("\n================================================================");
+            printf("\nPARABENS!! VOCE GANHOU O PREMIO TODO!!");
+        }
+        else
+        {
+            printf("\n================================================================");
+            printf("\nVocê acertou %d numero(s), infelizmente não ganhou nenhum prêmio.", quantNumerosIguais);
+        }
+
+
+
+        printf("\n================================================================");
         printf("\nDeseja jogar de novo?\n");
         scanf(" %c", &continuar);
-
+        printf("\n================================================================");
     }while(toupper(continuar) == 'S');
 
-    printf("\nNumeros iguais: %d", quantNumerosIguais);
+    
 
 
     return 0;
